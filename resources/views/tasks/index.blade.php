@@ -5,6 +5,7 @@
 @section('content')
 
     <!-- Bootstrap Boilerplate... -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
     <div class="panel-body">
         <!-- Display Validation Errors -->
@@ -26,7 +27,7 @@
             <!-- Add Task Button -->
             <div class="form-group">
                 <div class="col-sm-offset-3 col-sm-6">
-                    <button type="submit" class="btn btn-default">
+                    <button type="submit" class="btn btn-primary">
                         <i class="fa fa-plus"></i> Add Task
                     </button>
                 </div>
@@ -34,9 +35,7 @@
         </form>
     </div>
 
-    <!-- TODO: Current Tasks -->
-        <!-- Current Tasks -->
-        @if (count($tasks) > 0)
+    @if (count($tasks) > 0)
         <div class="panel panel-default">
             <div class="panel-heading">
                 Current Tasks
@@ -47,8 +46,9 @@
 
                     <!-- Table Headings -->
                     <thead>
+                        <th>ID</th>
                         <th>Task</th>
-                        <th>&nbsp;</th>
+                        <th>Action</th>
                     </thead>
 
                     <!-- Table Body -->
@@ -57,19 +57,18 @@
                             <tr>
                                 <!-- Task Name -->
                                 <td class="table-text">
-                                    <div>{{ $task->name }}</div>
+                                    <div>{{ $task->id }}</div>
                                 </td>
-
+                                <td>{{$task->name}}</td>
                                 <td>
-                                    <!-- TODO: Delete Button -->
-                                    <form action="{{ url('task/'.$task->id) }}" method="POST">
-                                        {{ csrf_field() }}
-                                        {{ method_field('DELETE') }}
+                                <form action="{{ url('task/'.$task->id) }}" method="POST">
+                                    {{ csrf_field() }}
+                                    {{ method_field('DELETE') }}
 
-                                        <button type="submit" id="delete-task-{{ $task->id }}" class="btn btn-danger">
-                                            <i class="fa fa-btn fa-trash"></i>Delete
-                                        </button>
-                                    </form>
+                                    <button type="submit" id="delete-task-{{ $task->id }}" class="btn btn-danger">
+                                        <i class="fa fa-btn fa-trash"></i>Delete
+                                    </button>
+                                </form>
                                 </td>
                             </tr>
                         @endforeach
