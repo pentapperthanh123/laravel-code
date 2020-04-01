@@ -38,9 +38,13 @@
     @if (count($tasks) > 0)
         <div class="panel panel-default">
             <div class="panel-heading">
-                Current Tasks
+            <form class="form-inline" action="/search" method="get">
+                <input class="form-control mr-sm-2" name="search" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-success my-2 my-sm-0" type="submit">Search</button> 
+            </form>
+                     
             </div>
-
+                
             <div class="panel-body">
                 <table class="table table-striped task-table">
 

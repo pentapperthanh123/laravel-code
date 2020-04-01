@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Task;
+use DB;
 use App\Http\Requests;
 use App\Repositories\TaskRepository;
 use App\Http\Controllers\Controller;
@@ -18,9 +19,8 @@ class TaskController extends Controller
     }
     public function index(Request $request)
     {
-        return view('tasks.index', [
-            'tasks' => $this->tasks->forUser($request->user()),
-        ]);
+        $tasks = DB::table('tasks')->paginate(10);
+        return view('tasks.index', ['tasks' => $tasks]);
     }
     public function store(Request $request)
     {
@@ -41,5 +41,11 @@ class TaskController extends Controller
         $task->delete();
 
         return redirect('/tasks');
+    }
+    public function search(Request $request)
+    {
+        $search = $request->get('search');
+        $tasks = DB::table('tasks')->where('name','like','%'.$search.'%')->paginate(10);
+        return view('tasks.index',['tasks' => $tasks]);
     }
 }
